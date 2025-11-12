@@ -4,14 +4,14 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    API_PREFIX: str
+    API_PREFIX: str = ""
     DEBUG: bool = False
 
-    DATABASE_URL: str
+    DATABASE_URL: str = ""
 
     ALLOWED_ORIGINS: str = ""
 
-    OPENAI_API_KEY: str
+    OPENAI_API_KEY: str = ""
 
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v: str) -> List[str]:

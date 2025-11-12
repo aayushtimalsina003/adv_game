@@ -2,9 +2,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import String, Integer, DateTime
 from sqlalchemy.sql import func
 from datetime import datetime
-
-class Base(DeclarativeBase):
-    pass
+from db.database import Base
 
 
 class StoryJob(Base):

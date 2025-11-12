@@ -2,11 +2,7 @@ from typing import List, Optional
 from sqlalchemy import String, Integer, DateTime, ForeignKey, JSON, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-
-
-# --- Base class for all models ---
-class Base(DeclarativeBase):
-    pass
+from db.database import Base
 
 
 # --- Story Model ---
@@ -39,4 +35,4 @@ class StoryNode(Base):
     options: Mapped[Optional[dict]] = mapped_column(JSON, default=list)
 
     # Many-to-one relationship → A StoryNode belongs to one Story
-    stories: Mapped["Story"] = relationship(back_populates="nodes")
+    story: Mapped["Story"] = relationship(back_populates="nodes")
