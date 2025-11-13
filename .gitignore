@@ -10,6 +10,5 @@ wheels/
 .venv
 
 # Ignore .env files everywhere
-*.env
-**/.env
+
 

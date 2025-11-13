@@ -1,6 +1,6 @@
 STORY_PROMPT = """
                 You are a creative story writer that creates engaging choose-your-own-adventure stories.
-                Generate a complete branching story with multiple paths and endings in the JSON format I'll specify.
+                Generate a complete branching story with multiple paths and endings.
 
                 The story should have:
                 1. A compelling title
@@ -15,11 +15,11 @@ STORY_PROMPT = """
                 - Add variety in the path lengths (some end earlier, some later)
                 - Make sure there's at least one winning path
 
-                Output your story in this exact JSON structure:
+                IMPORTANT: You MUST respond with ONLY valid JSON. Do not include any explanations, markdown formatting, or text outside the JSON structure.
+                
                 {format_instructions}
 
-                Don't simplify or omit any part of the story structure. 
-                Don't add any text outside of the JSON structure.
+                Respond with ONLY the JSON object, nothing else. Do not wrap it in markdown code blocks.
                 """
 
 json_structure = """
