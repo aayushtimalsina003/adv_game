@@ -1,190 +1,235 @@
-# Adventure Game - Interactive Story Generator
+# 🎮 AI-Powered Interactive Adventure Game
 
-An interactive text-based adventure game powered by AI that generates unique stories based on your chosen theme. The backend uses FastAPI with OpenAI integration, while the frontend is built with React and Vite.
+An interactive storytelling game that uses AI to generate dynamic, choice-driven narratives. Players can choose from predefined themes or create custom adventures, with each decision shaping the story's direction. The backend uses FastAPI with LangChain and OpenAI-compatible APIs, while the frontend is built with React and Vite.
 
-## Features
+## ✨ Features
 
-- 🎮 **Interactive Story Generation**: AI-powered story creation with multiple branching paths
-- 🎨 **Multiple Themes**: Choose from Fantasy, Sci-Fi, Mystery, Horror, Adventure, or create your own
-- 🔄 **Dynamic Choices**: Make decisions that affect the story outcome
-- 📊 **Progress Tracking**: Track your exploration through the story
-- 💾 **Session Management**: Stories are tied to your browser session
-- ⚡ **Real-time Updates**: Background job processing with live status updates
+- 🤖 **AI-Generated Stories**: Powered by LangChain and OpenAI-compatible APIs to create unique, dynamic narratives
+- 🎨 **Multiple Themes**: Choose from Fantasy, Sci-Fi, Mystery, Horror, Action Adventure, or create your own custom theme
+- 🔀 **Choice-Based Gameplay**: Every decision matters and leads to different story outcomes
+- ⚡ **Real-Time Story Generation**: Asynchronous job processing with polling for smooth user experience
+- 🎭 **Immersive Interface**: Beautiful, themed UI with loading animations and error handling
+- 💾 **Persistent Storage**: PostgreSQL database to store stories and game sessions
+- 📊 **Progress Tracking**: Track your exploration through the story and navigate backwards
 
-## Project Structure
+## 🏗️ Architecture
+
+### Backend (FastAPI)
+- **FastAPI** server with async job processing
+- **LangChain** integration for AI story generation
+- **SQLAlchemy** ORM with PostgreSQL database
+- **RESTful API** with automatic documentation
+- Modular architecture with routers, models, schemas, and services
+
+### Frontend (React + Vite)
+- **React 19** with functional components and hooks
+- **Vite** for fast development and optimized builds
+- **Axios** for API communication
+- Responsive design with custom CSS
+- Real-time polling for job status updates
+
+## 📁 Project Structure
 
 ```
 adv_game/
-├── backend/                 # FastAPI backend
-│   ├── core/               # Core functionality (story generator, config, models)
-│   ├── db/                 # Database configuration
-│   ├── models/             # SQLAlchemy models
-│   ├── routers/            # API routes
-│   ├── schemas/            # Pydantic schemas
-│   └── main.py             # FastAPI application entry point
+├── backend/
+│   ├── core/
+│   │   ├── config.py          # Configuration management
+│   │   ├── models.py          # Pydantic models for LLM responses
+│   │   ├── prompts.py         # AI prompts for story generation
+│   │   └── story_generator.py # Core story generation logic
+│   ├── db/
+│   │   └── database.py        # Database connection and setup
+│   ├── models/
+│   │   ├── job.py             # Job database model
+│   │   └── story.py           # Story database models
+│   ├── routers/
+│   │   ├── job.py             # Job status endpoints
+│   │   └── story.py           # Story generation endpoints
+│   ├── schemas/
+│   │   ├── job.py             # Job Pydantic schemas
+│   │   └── story.py           # Story Pydantic schemas
+│   ├── main.py                # FastAPI application entry point
+│   └── requirements.txt       # Python dependencies
 │
-└── frontend/               # React + Vite frontend
+└── frontend/
     ├── src/
-    │   ├── components/     # React components
-    │   ├── services/       # API integration
-    │   ├── App.jsx         # Main app component
-    │   └── main.jsx        # React entry point
-    └── package.json
+    │   ├── components/
+    │   │   ├── ThemeSelector.jsx   # Theme selection interface
+    │   │   ├── LoadingScreen.jsx   # Loading animation
+    │   │   ├── StoryGame.jsx       # Main game interface
+    │   │   └── ErrorScreen.jsx     # Error handling
+    │   ├── services/
+    │   │   └── api.js              # API client
+    │   ├── App.jsx                 # Main application component
+    │   └── main.jsx                # React entry point
+    ├── package.json               # Node.js dependencies
+    └── vite.config.js            # Vite configuration
 ```
 
-## Prerequisites
+## 📋 Prerequisites
 
-- Python 3.8+
-- Node.js 16+
-- OpenAI API Key
+- Python 3.9+
+- Node.js 18+
+- PostgreSQL
+- OpenRouter API key (or other OpenAI-compatible API)
 
-## Backend Setup
+## 🚀 Getting Started
 
-1. **Navigate to the backend directory:**
-   ```powershell
-   cd backend
-   ```
+### 1. Clone the Repository
 
-2. **Create a virtual environment:**
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
+```bash
+git clone https://github.com/aayushtimalsina003/adv_game.git
+cd adv_game
+```
 
-3. **Install dependencies:**
-   ```powershell
-   pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings openai python-dotenv
-   ```
+### 2. Backend Setup
 
-4. **Create a `.env` file in the backend directory:**
-   ```env
-   DATABASE_URL=sqlite:///./adventure_game.db
-   OPENAI_API_KEY=your_openai_api_key_here
-   ALLOWED_ORIGINS=http://localhost:5173
-   API_PREFIX=
-   DEBUG=True
-   ```
+Navigate to the backend directory:
 
-5. **Run the backend server:**
-   ```powershell
-   python main.py
-   ```
-
-   The API will be available at `http://localhost:8000`
-   - API Documentation: `http://localhost:8000/docs`
-   - Alternative docs: `http://localhost:8000/redoc`
-
-## Frontend Setup
-
-1. **Navigate to the frontend directory:**
-   ```powershell
-   cd frontend
-   ```
-
-2. **Install dependencies:**
-   ```powershell
-   npm install
-   ```
-
-3. **Start the development server:**
-   ```powershell
-   npm run dev
-   ```
-
-   The app will be available at `http://localhost:5173`
-
-## Usage
-
-1. **Start both servers** (backend and frontend)
-2. **Open your browser** to `http://localhost:5173`
-3. **Choose a theme** from the theme selector or create your own
-4. **Wait for story generation** (usually takes 10-30 seconds)
-5. **Make choices** to navigate through your adventure
-6. **Explore different paths** by going back or starting new adventures
-
-## API Endpoints
-
-### Stories
-- `POST /stories/create` - Create a new story with a theme
-- `GET /stories/{story_id}/complete` - Get complete story data
-
-### Jobs
-- `GET /jobs/{job_id}` - Check story generation job status
-
-## Technologies Used
-
-### Backend
-- FastAPI - Modern, fast web framework
-- SQLAlchemy - SQL toolkit and ORM
-- Pydantic - Data validation
-- OpenAI API - Story generation
-- SQLite - Database
-
-### Frontend
-- React 19 - UI library
-- Vite - Build tool and dev server
-- Axios - HTTP client
-- CSS3 - Styling with animations
-
-## Development
-
-### Backend Development
-```powershell
+```bash
 cd backend
-.\venv\Scripts\Activate.ps1
+```
+
+Create a `.env` file with the following variables:
+
+```env
+# Database Configuration
+DATABASE_URL=postgresql://user:password@localhost:5432/adventure_game
+
+# API Configuration
+OPENAI_API_KEY=your_openrouter_api_key_here
+OPENAI_BASE_URL=https://openrouter.ai/api/v1
+
+# CORS Configuration
+ALLOWED_ORIGINS=["http://localhost:5173"]
+API_PREFIX=/api/v1
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the backend server:
+
+```bash
 python main.py
 ```
 
-### Frontend Development
-```powershell
+The API will be available at `http://localhost:8000`
+- API Documentation: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+### 3. Frontend Setup
+
+Navigate to the frontend directory:
+
+```bash
 cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
 npm run dev
 ```
 
-### Building for Production
+The frontend will be available at `http://localhost:5173`
 
-**Frontend:**
-```powershell
+## 🎮 How to Play
+
+1. **Select a Theme**: Choose from predefined themes or create your own custom adventure
+2. **Wait for Generation**: The AI generates a unique story with multiple choice points
+3. **Make Choices**: Read the story and select your preferred action
+4. **Experience Outcomes**: Watch as your choices shape the narrative
+5. **Reach the Conclusion**: Each path leads to a different ending
+
+## 🔧 API Endpoints
+
+### Story Generation
+- `POST /api/v1/story/generate` - Start story generation job
+- `GET /api/v1/story/{story_id}` - Get complete story with all nodes
+
+### Job Management
+- `GET /api/v1/job/{job_id}` - Check job status and results
+
+## 🛠️ Technologies Used
+
+### Backend
+- FastAPI
+- LangChain & LangChain-OpenAI
+- SQLAlchemy
+- PostgreSQL
+- Pydantic
+- Uvicorn
+
+### Frontend
+- React 19
+- Vite
+- Axios
+- CSS3
+
+## 📦 Building for Production
+
+### Backend
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+### Frontend
+```bash
 cd frontend
 npm run build
 npm run preview
 ```
 
-## Features Explained
+## 🎬 Demo Video
 
-### Theme Selection
-Choose from predefined themes or create your own custom adventure theme.
+> **Coming Soon!** Check back later for a full walkthrough of the AI-Powered Interactive Adventure Game in action.
 
-### Story Generation
-Stories are generated asynchronously using OpenAI's API. The system creates:
-- A compelling narrative with multiple branching paths
-- Decision points that affect the story
-- Multiple endings (winning and losing outcomes)
+*[Demo video will showcase:]*
+- *Theme selection and customization*
+- *Real-time story generation*
+- *Interactive gameplay with multiple choices*
+- *Different story outcomes based on player decisions*
+- *Complete end-to-end user experience*
 
-### Progress Tracking
-- Track visited nodes
-- Navigate backwards through your choices
-- See how much of the story you've explored
+## 🤝 Contributing
 
-### Session Management
-Stories are tied to browser sessions using cookies, allowing you to maintain your progress.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Troubleshooting
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Backend Issues
-- **Database errors**: Delete `adventure_game.db` and restart
-- **OpenAI errors**: Check your API key and account status
-- **CORS errors**: Verify `ALLOWED_ORIGINS` in `.env` matches frontend URL
+## 📝 License
 
-### Frontend Issues
-- **Connection errors**: Ensure backend is running on port 8000
-- **Build errors**: Delete `node_modules` and run `npm install` again
-- **Display issues**: Clear browser cache and reload
+This project is open source and available under the [MIT License](LICENSE).
 
-## Contributing
+## 👤 Author
 
-Feel free to fork this project and submit pull requests for any improvements!
+**Aayush Timalsina**
+- GitHub: [@aayushtimalsina003](https://github.com/aayushtimalsina003)
 
-## License
+## 🙏 Acknowledgments
 
-MIT License - feel free to use this project for learning or personal use.
+- OpenRouter for providing access to AI models
+- FastAPI for the excellent web framework
+- LangChain for simplifying LLM integration
+- React and Vite teams for amazing frontend tools
+
+---
+
+⭐ If you found this project interesting, please consider giving it a star!
